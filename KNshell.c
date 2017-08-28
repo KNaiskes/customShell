@@ -5,7 +5,25 @@
 #include<sys/wait.h>
 #include<string.h>
 
-void readCommand() {
+int validCommand(const char * command) {
+	char * valid_commands[] = {"pwd","cd","rm"};
+	int exists = -1;
+
+	int len = sizeof(valid_commands) / sizeof(valid_commands[0]);
+
+	int i;
+
+	for(i = 0; i < len; i++) {
+		if(strcmp(valid_commands[i], command) == 0) { 
+			printf("execute command : %s\n",command);
+			exists = 0;
+			break;
+		} 
+	}
+	return exists;
+}
+	
+const char * readCommand() {
 	char *command;
 	size_t buffer_size= 255;
 	size_t get_command;
@@ -20,20 +38,13 @@ void readCommand() {
 	
 	command[strcspn(command, "\n")] = 0;
 
-	if(strcmp(command, "test") == 0) {
-		printf("this is a test\n");
-	} else {
-		printf("this is still a test\n");
-	}
+	return command;
 }
+
 
 
 int main(int argc, char *argv[])
 {
-	while(1) {
-		readCommand();
-	}
-
 
 
 	return 0;
