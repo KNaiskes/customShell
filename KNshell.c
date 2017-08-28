@@ -41,12 +41,27 @@ const char * readCommand() {
 	return command;
 }
 
+void executeCommand() {
+	while(1) {
+	const char * rCommand = readCommand();
+	const int vCommand = validCommand(rCommand);
+
+	if(vCommand == 0){
+		// fork
+		printf("Command exists\n");
+	} else{
+		printf("Command: %s does not exist\n",rCommand);
+	}
+	}
+}
+
 
 
 int main(int argc, char *argv[])
 {
 
-
+	executeCommand();
+	
 	return 0;
 }
 
