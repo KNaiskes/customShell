@@ -15,7 +15,7 @@ int validCommand(const char * command) {
 
 	for(i = 0; i < len; i++) {
 		if(strcmp(valid_commands[i], command) == 0) { 
-			printf("execute command : %s\n",command);
+			//printf("execute command : %s\n",command);
 			exists = 0;
 			break;
 		} 
@@ -48,7 +48,21 @@ void executeCommand() {
 
 	if(vCommand == 0){
 		// fork
-		printf("Command exists\n");
+		pid_t commandPid = fork();
+		
+		if(commandPid < 0) {
+			perror("Failed to fork\n");
+		}
+		if(commandPid == 0) {
+			system(rCommand);
+			sleep(10);
+			//printf("In the fork\n");
+			exit(0);
+			
+		}
+		int status = 0;
+		pid_t commandId= wait(&status);
+		int commandReturn = WEXITSTATUS(status);
 	} else{
 		printf("Command: %s does not exist\n",rCommand);
 	}
