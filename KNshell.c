@@ -5,9 +5,10 @@
 #include<sys/wait.h>
 #include<string.h>
 
+char * valid_commands[] = {"pwd","cd","rm"};
+void (*commands_funs[])() = {};  
 
 int validCommand(const char * command) {
-	char * valid_commands[] = {"pwd","cd","rm"};
 	int exists = -1;
 
 	int len = sizeof(valid_commands) / sizeof(valid_commands[0]);
@@ -16,7 +17,8 @@ int validCommand(const char * command) {
 
 	for(i = 0; i < len; i++) {
 		if(strcmp(valid_commands[i], command) == 0) { 
-			exists = 0;
+			//exists = 0;
+			exists = i;
 			break;
 		} 
 	}
@@ -46,7 +48,7 @@ void executeCommand() {
 	const char * rCommand = readCommand();
 	const int vCommand = validCommand(rCommand);
 
-	if(vCommand == 0){
+	if(vCommand > -1){
 		pid_t commandPid = fork();
 		
 		if(commandPid < 0) {
@@ -54,7 +56,9 @@ void executeCommand() {
 		}
 		if(commandPid == 0) {
 			//system(rCommand);
-			sleep(10);
+			//printf("run command\n");
+			commands_funs[vCommand]();
+			//sleep(10);
 			exit(0);
 		}
 		int status = 0;
