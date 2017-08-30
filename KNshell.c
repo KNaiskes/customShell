@@ -5,6 +5,7 @@
 #include<sys/wait.h>
 #include<string.h>
 
+
 int validCommand(const char * command) {
 	char * valid_commands[] = {"pwd","cd","rm"};
 	int exists = -1;
@@ -15,7 +16,6 @@ int validCommand(const char * command) {
 
 	for(i = 0; i < len; i++) {
 		if(strcmp(valid_commands[i], command) == 0) { 
-			//printf("execute command : %s\n",command);
 			exists = 0;
 			break;
 		} 
@@ -47,18 +47,15 @@ void executeCommand() {
 	const int vCommand = validCommand(rCommand);
 
 	if(vCommand == 0){
-		// fork
 		pid_t commandPid = fork();
 		
 		if(commandPid < 0) {
 			perror("Failed to fork\n");
 		}
 		if(commandPid == 0) {
-			system(rCommand);
+			//system(rCommand);
 			sleep(10);
-			//printf("In the fork\n");
 			exit(0);
-			
 		}
 		int status = 0;
 		pid_t commandId= wait(&status);
@@ -68,7 +65,6 @@ void executeCommand() {
 	}
 	}
 }
-
 
 
 int main(int argc, char *argv[])
