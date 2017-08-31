@@ -4,9 +4,11 @@
 #include<sys/types.h>
 #include<sys/wait.h>
 #include<string.h>
+#include"ls.h"
 
-char * valid_commands[] = {"pwd","cd","rm"};
-void (*commands_funs[])() = {};  
+/* commands and functions must be in the same order in their lists */
+char * valid_commands[] = {"ls"};
+void (*commands_funs[])() = {ls};   
 
 int validCommand(const char * command) {
 	int exists = -1;
@@ -17,7 +19,6 @@ int validCommand(const char * command) {
 
 	for(i = 0; i < len; i++) {
 		if(strcmp(valid_commands[i], command) == 0) { 
-			//exists = 0;
 			exists = i;
 			break;
 		} 
@@ -55,10 +56,7 @@ void executeCommand() {
 			perror("Failed to fork\n");
 		}
 		if(commandPid == 0) {
-			//system(rCommand);
-			//printf("run command\n");
 			commands_funs[vCommand]();
-			//sleep(10);
 			exit(0);
 		}
 		int status = 0;
