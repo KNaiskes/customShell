@@ -1,10 +1,10 @@
-#include<stdio.h>
-#include<unistd.h>
-#include<stdlib.h>
-#include<sys/types.h>
-#include<sys/wait.h>
-#include<string.h>
-#include"ls.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
+#include "ls.h"
 
 /* commands and functions must be in the same order in their lists */
 char * valid_commands[] = {"ls"};
