@@ -5,10 +5,11 @@
 #include <sys/wait.h>
 #include <string.h>
 #include "ls.h"
+#include "pwd.h"
 
 /* commands and functions must be in the same order in their lists */
-char * valid_commands[] = {"ls"};
-void (*commands_funs[])() = {ls};   
+char * valid_commands[] = {"ls","pwd"};
+void (*commands_funs[])() = {ls,pwd};   
 
 int validCommand(const char * command) {
 	int exists = -1;
